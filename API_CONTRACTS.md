@@ -123,7 +123,7 @@ If provider caching is enabled, autocomplete results may be cached under key pre
 2. For **each** destination in `points`, compute **route distance & duration** from origin → `(point.lat, point.lng)` (provider distance matrix basic).
 3. Select **nearest** destination by smallest distance (km).
 4. Apply **eligibility** using **`config`** from the same request body.
-5. Build **`mapLink`** for the **nearest** point’s coordinates.
+5. Build **`mapLink`** from the request **origin** coordinates (`lat`, `lng` at the root of the body — same pair used for reverse geocode).
 
 **Distance semantics**
 
@@ -165,7 +165,7 @@ If provider caching is enabled, autocomplete results may be cached under key pre
   },
   "isEligible": true,
   "message": "Eligible within configured distance threshold",
-  "mapLink": "https://www.google.com/maps?q=12.9352,77.6245"
+  "mapLink": "https://www.google.com/maps?q=12.9716,77.5946"
 }
 ```
 
@@ -176,7 +176,7 @@ If provider caching is enabled, autocomplete results may be cached under key pre
 | `duration` | Duration to **nearest** point (**minutes**, rounded) |
 | `nearestPoint` | Nearest destination from `points` |
 | `isEligible` / `message` | If `config.enableEligibilityCheck` is `true`: eligible when `distance <= config.maxDistanceKm`. If `false`: `isEligible` is `true` and message indicates eligibility check disabled |
-| `mapLink` | Default pattern `https://www.google.com/maps?q=<nearest.lat>,<nearest.lng>` (base configurable server-side only for links) |
+| `mapLink` | Same pattern using **request origin** `lat`/`lng`: `https://www.google.com/maps?q=<lat>,<lng>` (base configurable via `MAP_LINK_BASE_URL`) |
 
 ### Errors — `POST /api/map/process`
 

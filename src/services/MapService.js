@@ -26,7 +26,7 @@ class MapService {
     const address = await this.mapProvider.reverseGeocode(origin.lat, origin.lng);
     const nearest = await this.#getNearestPoint(origin, points);
     const eligibility = EligibilityUtil.evaluate(nearest.distanceKm, runtimeConfig);
-    const mapLink = MapLinkUtil.generate(nearest.point.lat, nearest.point.lng);
+    const mapLink = MapLinkUtil.generate(origin.lat, origin.lng);
 
     const response = {
       address,
