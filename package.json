@@ -1,0 +1,16 @@
+{
+  "name": "ola-map-service",
+  "version": "1.0.0",
+  "description": "Reusable provider-agnostic map service module",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "node src/app.js",
+    "bench": "node scripts/benchmark.js"
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2"
+  }
+}
