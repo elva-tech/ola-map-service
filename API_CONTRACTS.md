@@ -10,13 +10,37 @@ This document describes the HTTP API for the **stateless**, **request-driven** m
 
 | Method | Path | Summary |
 |--------|------|---------|
+| `GET` | `/` | Service metadata and endpoint index (for humans / load balancers) |
 | `GET` | `/health` | Liveness probe |
 | `GET` | `/api/map/search` | Location search (autocomplete), query param `q` |
 | `POST` | `/api/map/process` | Reverse geocode origin, distances to points, nearest point, eligibility, map link |
 
 ---
 
-## 1. Health check
+## 1. Root
+
+### `GET /`
+
+Returns a small JSON document listing main routes (useful after deploy when opening the service URL in a browser).
+
+**Response `200 OK`**
+
+```json
+{
+  "service": "ola-map-service",
+  "provider": "ola",
+  "docs": "See API_CONTRACTS.md in the repository",
+  "endpoints": {
+    "health": "GET /health",
+    "process": "POST /api/map/process",
+    "search": "GET /api/map/search?q=<text>"
+  }
+}
+```
+
+---
+
+## 2. Health check
 
 ### `GET /health`
 
@@ -32,7 +56,7 @@ This document describes the HTTP API for the **stateless**, **request-driven** m
 
 ---
 
-## 2. Location search (autocomplete)
+## 3. Location search (autocomplete)
 
 ### `GET /api/map/search?q=<searchText>`
 
@@ -87,7 +111,7 @@ If provider caching is enabled, autocomplete results may be cached under key pre
 
 ---
 
-## 3. Process map request
+## 4. Process map request
 
 ### `POST /api/map/process`
 
@@ -177,6 +201,12 @@ Malformed JSON on POST may hit the global handler and return **`500`** with `{"e
 ---
 
 ## cURL examples (Windows)
+
+### Root (service index)
+
+```bash
+curl.exe "http://localhost:3000/"
+```
 
 ### Health
 

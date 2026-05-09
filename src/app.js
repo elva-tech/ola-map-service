@@ -30,6 +30,19 @@ const mapController = new MapController(mapService);
 
 app.use("/api/map", buildMapRoutes(mapController));
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    service: "ola-map-service",
+    provider: config.PROVIDER_NAME,
+    docs: "See API_CONTRACTS.md in the repository",
+    endpoints: {
+      health: "GET /health",
+      process: "POST /api/map/process",
+      search: "GET /api/map/search?q=<text>"
+    }
+  });
+});
+
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "ok" });
 });
